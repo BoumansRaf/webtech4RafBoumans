@@ -24,6 +24,7 @@ from djangotoolbox.fields import ListField
             if recept == None:
                 recept = name + ' Cals:' + cals + ' ingredients:' + ingredients + ' time:' + time
                 post = {"name:"  name , "cals:" cals, "ingredients:" ingredients, "time:" time}
+                db.insert_one(post)
             else:
                 recept =  'Recept bestaat al'
 
