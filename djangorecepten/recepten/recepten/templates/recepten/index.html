@@ -1,0 +1,12 @@
+<form action="{% url 'recepten' %}" method='post'>
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="name">
+    <input type="text" name="cals" placeholder="cals">
+    <input type="text" name="ingredients" placeholder="ingredients">
+    <input type="text" name="time" placeholder="time">
+    <input type="submit" value="addRecept" >
+</form>
+
+{% if recept %}
+    Recept: {{ recept }}
+{% endif %}

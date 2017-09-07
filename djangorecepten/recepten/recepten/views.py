@@ -1,15 +1,18 @@
-from django.db import models
 
+from pymongo import MongoClient
 from djangotoolbox.fields import ListField
 
 
-class Post(models.Model):
-    name = models.CharField()
-    cals = models.IntegerField()
-    ingredients = ListField()
-    time = TextField()
+
+
 
     def addRecept(request):
+        client = MongoClient()
+        db = client.receptdb
+
+
+
+
         if request.method == 'POST':
             name = request.POST.get('name')
             cals = request.POST.get('cals')
@@ -17,13 +20,14 @@ class Post(models.Model):
             time = request.POST.get('time')
 
 
-            recept = db.get('name:' + name)
+            recept = db.find_one({"name":  + name  })
             if recept == None:
                 recept = name + ' Cals:' + cals + ' ingredients:' + ingredients + ' time:' + time
+                post = {"name:"  name , "cals:" cals, "ingredients:" ingredients, "time:" time}
             else:
                 recept =  'Recept bestaat al'
 
 
-                return render(request, 'recepten/index.html', {'recept': recept} )
+            return render(request, 'recepten/index.html', {'recept': recept} )
         else:
                 return render(request, 'recepten/index.html', None)
